@@ -14,7 +14,7 @@
     <tbody>
     {% for reports in report %}
       <tr>
-        <td><a href="{% url 'laboratory' id_group=group.id id_student=user.id id=reports.id %}">{{ reports.laboratory.name }}</a></td>
+        <td><a href="{% url 'laboratory' id_group=group.id id_student=user.user.id id=reports.id %}">{{ reports.laboratory.name }}</a></td>
         <td><a >{{ reports.price }}</a></td>
         <td><a >{{ reports.rating }}</a></td>
       </tr>

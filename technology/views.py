@@ -160,7 +160,7 @@ def student(request, id, id_group):
         :return:
     """
     if request.user.is_staff:
-        context = {'report': Report.objects.filter(user__id=id), 'user': UserGroup.objects.get(user__chat=id),
+        context = {'report': Report.objects.filter(user__id=id), 'user': UserGroup.objects.get(user__id=id),
                    'group': Group.objects.get(id=id_group)}
         return TemplateResponse(request, 'teacher/student.html', context)
     else:

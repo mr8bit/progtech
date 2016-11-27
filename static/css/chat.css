@@ -5,7 +5,9 @@
 
 #msg-list-div {
     overflow-y: scroll;
-    height: 65%;
+    height: 300px;
+    min-height: 450px;
+    max-height: 700px;
 }
 .panel-heading a:after {
     font-family:'Glyphicons Halflings';
