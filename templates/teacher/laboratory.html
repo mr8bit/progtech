@@ -1,0 +1,44 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ laboratory.laboratory.name }}</h2>
+            <h4>Студент: {{ laboratory.user }} </h4>
+            <h5>Вариант: {{ laboratory.laboratory.variant }} </h5>
+            <br>
+            <br>
+            <div>
+                <form method="post" enctype="multipart/form-data" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputFile">Описание</label>
+                        <p>{{ laboratory.laboratory.description |safe }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">Отчет</label>
+                        <p><a href="/media/{{ laboratory.report }}" target="_blank"> Открыть </a></p>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.rating.label }}</label>
+                        <input name="rating" id="rating"  class="form-control" value='{{ form.rating.value}}'>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.price.label }}</label>
+                        {{ form.price }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.note.label }}</label>
+                        {{ form.note }}
+                    </div>
+                    <button type="submit" class="btn btn-default">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#id_price').addClass("form-control");
+    $('#id_note').addClass("form-control");
+</script>
+{% endblock %}

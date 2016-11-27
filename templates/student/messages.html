@@ -1,0 +1,16 @@
+{% for obj in chat %}
+    {% if obj.user == request.user %}
+
+        <li class="text-right list-group-item" xmlns="http://www.w3.org/1999/html">
+            <small>{{ obj.created|date:"D d M Y"  }}</small></br>
+            {{ obj.user.first_name }} {{ obj.user.last_name }} </br>
+            {{ obj.message }}
+
+        </li>
+    {% else %}
+
+        <li class="text-left list-group-item">{{ obj.user }}<br>{{ obj.message }}</li>
+    {% endif %}
+{% empty %}
+    <li class="text-right list-group-item">No messages yet!</li>
+{% endfor %}

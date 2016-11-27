@@ -1,0 +1,25 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Лабораторные работы студента {{ student }} </h2>
+  <p>Выберите лабораторные работу для проверки. </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Лабораторные работы</th>
+        <th>Оценка</th>
+        <th>Балл</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for reports in report %}
+      <tr>
+        <td><a href="{% url 'laboratory' id_group=group.id id_student=user.id id=reports.id %}">{{ reports.laboratory.name }}</a></td>
+        <td><a >{{ reports.price }}</a></td>
+        <td><a >{{ reports.rating }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

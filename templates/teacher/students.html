@@ -1,0 +1,25 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Студенты</h2>
+    <p>Выберите студента для проверки. </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Студент</th>
+            <th>Вариант</th>
+            <th>Группа</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <td><a href="{% url 'student' id=student.user_id id_group=group.id %}">{{ student }}</a></td>
+                <td>{{ student.variant }}</td>
+                <td>{{ student.group }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

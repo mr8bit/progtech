@@ -1,0 +1,23 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Группы</h2>
+  <p>Выберите группу для проверки студентов. </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Группа</th>
+          <th>Чат группы</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for group in userGroup %}
+      <tr>
+        <td><a href="{% url 'students' group.id  %}">{{ group }}</a></td>
+        <td><a href="{% url 'chat' group.id %}">Открыть</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

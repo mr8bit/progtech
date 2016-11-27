@@ -1,0 +1,98 @@
+{% extends 'student/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6" style="position: relative;">
+            <div id="chat-body" class="panel panel-default">
+                <div class="panel-heading">Чат</div>
+                <div id="msg-list-div" class="panel-body">
+                    <ul id="msg-list" class="list-group">
+                        {% for obj in chat %}
+                            {% if obj.user == request.user %}
+                                <li class="text-right list-group-item">
+                                    {{ obj.first_name }}<br>
+                                    {{ obj.message }}
+                                </li>
+                            {% else %}
+                                <li class="text-left list-group-item">{{ obj.message }}</li>
+                            {% endif %}
+                        {% empty %}
+                            <li class="text-right list-group-item">No messages yet!</li>
+                        {% endfor %}
+                        <script>
+                            var chatlist = document.getElementById('msg-list-div');
+                            chatlist.scrollTop = chatlist.scrollHeight;
+                        </script>
+                    </ul>
+                </div>
+            </div>
+            <form id="chat-form" method="post" action="/post/" style=" margin-bottom: 0;">
+                <div id="chat-bottom" class="input-group">
+                    <input type="text" autocomplete="off" id="chat-msg" name="chat-msg" class="form-control"/>
+                    <input type="hidden" value="{{ g.id }}" name="group" id="group"/>
+                    <span class="input-group-btn">
+                    <input class="btn btn-default" id="send" type="submit" value="Отправить"/>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {% for lab in labs %}
+                    <div class="panel-group" id="accordion">
+                    <div class="panel panel-default" id="panel1">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-target="#collapse{{ lab.id }}"
+                                   href="#collapse{{ lab.id }}">
+                                    {{ lab.name }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse{{ lab.id }}" class="collapse ">
+                            <div class="panel-body">
+                                {{ lab.description|safe }}
+                                {% if  lab.reports.all %}
+                                    {% for rap in  lab.reports.all %}
+                                        {% if rap.price %}
+                                            <b>Оценка: </b> {{ rap.price }}<br>
+                                            <b>Балл: </b>{{ rap.rating }}<br>
+                                            {% if rap.note %}
+                                                <b>Комментарий: </b> {{ rap.note }}<br>
+                                            {% endif %}
+                                        {% elif rap.note %}
+                                            {{ rap.note|safe }}
+                                             <form method="post" enctype="multipart/form-data" class="form">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile">Отчет:</label>
+                                                    <input type="file" name="docfile">
+                                                    <input type="hidden" name="id" value="{{ lab.id }}">
+                                                    <p class="help-block">В формате pdf.</p>
+                                                </div>
+                                                <button type="submit" class="btn btn-default">Отправить</button>
+                                            </form>
+                                        {% else %}
+                                            <b>На оценивании</b>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <form method="post" enctype="multipart/form-data" class="form">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Отчет:</label>
+                                            <input type="file" name="docfile">
+                                            <input type="hidden" name="id" value="{{ lab.id }}">
+                                            <p class="help-block">В формате pdf.</p>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Отправить</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
